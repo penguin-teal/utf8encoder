@@ -91,6 +91,15 @@ int main()
         success = false;
     }
 
-    return success ? 0 : 1;
+    if(success)
+    {
+        printf("Test succeeded!\n");
+        return 0;
+    }
+    else
+    {
+        printf("Test failed.\n");
+        return 1;
+    }
 }
 
