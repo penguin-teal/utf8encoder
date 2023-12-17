@@ -22,7 +22,7 @@ ERRORS			:= -Werror=implicit-int -Werror=implicit-function-declaration
 CFLAGS 		    := $(WARNINGS) $(ERRORS) -std=c99
 
 DEBUGCFLAGS		:= -g3
-RELEASECFLAGS	:= -g3
+RELEASECFLAGS	:= -O3
 SO_C_FLAGS		:= -fPIC
 SO_LD_FLAGS 	:= -shared
 
