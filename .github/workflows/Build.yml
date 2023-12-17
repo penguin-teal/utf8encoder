@@ -1,0 +1,35 @@
+name: Build
+
+on:
+    push:
+        branches: [ "master" ]
+    pull_request:
+        branches: [ "master" ]
+
+jobs:
+    build-gcc:
+
+        runs-on: ubuntu-latest
+
+        steps:
+        - uses: actions/checkout@v3
+        - run: make test CC=gcc
+        - run: ./bin/test
+        - run: make clean
+        - run: make sharedtest CC=gcc
+        - run: ./bin/sotest
+        - run: make clean
+
+    build-clang:
+
+        runs-on: ubuntu-latest
+
+        steps:
+        - uses: actions/checkout@v3
+        - run: make test CC=clang
+        - run: ./bin/test
+        - run: make clean
+        - run: make sharedtest CC=clang
+        - run: ./bin/sotest
+        - run: make clean
+
