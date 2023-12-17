@@ -1,3 +1,5 @@
+MKDIR			:= mkdir -p --
+
 INCLUDE			:= ./include
 SRC				:= ./src
 SRCS			:= $(wildcard $(SRC)/*.c)
@@ -27,17 +29,17 @@ SO_LD_FLAGS 	:= -shared
 .PHONY: static shared test sharedtest clean
 
 $(OBJ)/%.o: $(SRC)/%.c
-	mkdir -p -- $(OBJ)
+	$(MKDIR) $(OBJ)
 	$(CC) $(CFLAGS) $(RELEASECFLAGS) -I$(INCLUDE) -c $^ -o $@
 
 $(OUT): $(OBJS)
-	mkdir -p -- $(BIN)
+	$(MKDIR) $(BIN)
 	ar rcvs $@ $^
 
 static: $(OUT)
 
 $(SO_OBJ)/%.o: $(SRC)/%.c
-	mkdir -p -- $(SO_OBJ)
+	$(MKDIR) $(SO_OBJ)
 	$(CC) $(SO_CFLAGS) $(RELEASECFLAGS) -I$(INCLUDE) $^ -o $@
 
 $(SO_OUT): $(SO_OBJS)
@@ -47,11 +49,11 @@ $(SO_OUT): $(SO_OBJS)
 shared: $(SO_OUT)
 
 $(TESTOUT): $(OUT) $(TESTSRCS)
-	mkdir -p -- $(BIN)
+	$(MKDIR) $(BIN)
 	$(CC) $(CFLAGS) $(DEBUGCFLAGS) $(TESTSRCS) -L$(BIN) -lutf8encoder -I$(INCLUDE) -o $@
 
 $(SOTESTOUT): $(SO_OUT) $(TESTSRCS)
-	mkdir -p -- $(BIN)
+	$(MKDIR) $(BIN)
 	$(CC) $(CFLAGS) $(DEBUGCFLAGS) $(TESTSRCS) -L$(BIN) -lutf8encoder -I$(INCLUDE) -o $@
 
 test: $(TESTOUT)
