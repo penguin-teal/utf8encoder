@@ -22,7 +22,7 @@ ERRORS			:= -Werror=implicit-int -Werror=implicit-function-declaration
 CFLAGS 		    := $(WARNINGS) $(ERRORS) -std=c99
 
 DEBUGCFLAGS		:= -g3
-RELEASECFLAGS	:= -O3
+RELEASECFLAGS	:= -g3
 SO_C_FLAGS		:= -fPIC
 SO_LD_FLAGS 	:= -shared
 
@@ -40,11 +40,11 @@ static: $(OUT)
 
 $(SO_OBJ)/%.o: $(SRC)/%.c
 	$(MKDIR) $(SO_OBJ)
-	$(CC) $(SO_CFLAGS) $(RELEASECFLAGS) -I$(INCLUDE) $^ -o $@
+	$(CC) $(SO_CFLAGS) $(RELEASECFLAGS) -I$(INCLUDE) -c $^ -o $@
 
 $(SO_OUT): $(SO_OBJS)
 	mkdir -p -- $(BIN)
-	$(CC) $(SO_LD_FLAGS) -o $@
+	$(CC) $(SO_LD_FLAGS) $^ -o $@
 
 shared: $(SO_OUT)
 
@@ -54,7 +54,7 @@ $(TESTOUT): $(OUT) $(TESTSRCS)
 
 $(SOTESTOUT): $(SO_OUT) $(TESTSRCS)
 	$(MKDIR) $(BIN)
-	$(CC) $(CFLAGS) $(DEBUGCFLAGS) $(TESTSRCS) -L$(BIN) -lutf8encoder -I$(INCLUDE) -o $@
+	$(CC) $(CFLAGS) $(DEBUGCFLAGS) $(TESTSRCS) -L$(BIN) -lutf8encoder -Wl,-rpath=$(BIN) -I$(INCLUDE) -o $@
 
 test: $(TESTOUT)
 
