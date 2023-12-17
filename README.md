@@ -4,6 +4,9 @@
 Two simple functions to encode and decode UTF-8 from/to its Unicode code
 points using bitwise operators.
 
+The Makefile is for Linux, however the code itself should compile on any
+platform.
+
 ## Header
 
 The header file is in `./include/utf8encoder.h`.
