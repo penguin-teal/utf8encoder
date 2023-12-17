@@ -48,11 +48,11 @@ $(SO_OUT): $(SO_OBJS)
 
 shared: $(SO_OUT)
 
-$(TESTOUT): $(OUT) $(TESTSRCS)
+$(TESTOUT): clean $(OUT) $(TESTSRCS)
 	$(MKDIR) $(BIN)
 	$(CC) $(CFLAGS) $(DEBUGCFLAGS) $(TESTSRCS) -L$(BIN) -lutf8encoder -I$(INCLUDE) -o $@
 
-$(SOTESTOUT): $(SO_OUT) $(TESTSRCS)
+$(SOTESTOUT): clean $(SO_OUT) $(TESTSRCS)
 	$(MKDIR) $(BIN)
 	$(CC) $(CFLAGS) $(DEBUGCFLAGS) $(TESTSRCS) -L$(BIN) -lutf8encoder -Wl,-rpath=$(BIN) -I$(INCLUDE) -o $@
 
