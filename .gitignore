@@ -1,0 +1,6 @@
+bin/
+obj/
+soobj/
+
+compile_commands.json
+.cache/
