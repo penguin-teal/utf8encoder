@@ -18,6 +18,34 @@
 #include <stddef.h>
 
 /**
+ * Returns how many bytes the encoded UTF-8 character will take up.
+ * This would be the first byte of a multi-byte character.
+ * An ASCII character would return 1.
+ * @param The first byte of the UTF-8 encoded character.
+ * @return How many bytes this encoding takes up from 1 to 4.
+ */
+size_t utf8Size(uint8_t binary)
+{
+    if((binary >> 3 & 0b11111) == 0b11110)
+    {
+        return 4;
+    }
+    else if((binary >> 4 & 0b1111) == 0b1110)
+    {
+        return 3;
+    }
+    else if((binary >> 5 & 0b111) == 0b110)
+    {
+        return 2;
+    }
+    else if((binary >> 7 & 0b1) == 0)
+    {
+        return 1;
+    }
+    else return 0;
+}
+
+/**
  * Encodes a single UTF-8 code point into its binary representation.
  * Fills the `size` argument with the size.
  * `size` will be set to `0` on fail.
