@@ -57,7 +57,7 @@ size_t utf8Size(uint8_t binary)
 uint32_t utf8Encode(uint64_t codePoint, size_t *size)
 {
     // Is the code point ASCII?
-    if(codePoint < 0x007Fu)
+    if(codePoint <= 0x007Fu)
     {
         // ASCII characters are 1 byte
         if(size) *size = 1;
@@ -65,7 +65,7 @@ uint32_t utf8Encode(uint64_t codePoint, size_t *size)
         return codePoint;
     }
     // Between U+0080 and U+07FF?
-    else if(codePoint < 0x07FFu)
+    else if(codePoint <= 0x07FFu)
     {
         // This range is encoded in 2 bytes
         if(size) *size = 2;
@@ -77,7 +77,7 @@ uint32_t utf8Encode(uint64_t codePoint, size_t *size)
         return (uint32_t)byte1 << 8 | (uint32_t)byte2;
     }
     // Between U+0800 and U+FFFF?
-    else if(codePoint < 0xFFFFu)
+    else if(codePoint <= 0xFFFFu)
     {
         // This range is encoded in 3 bytes
         if(size) *size = 3;
@@ -91,7 +91,7 @@ uint32_t utf8Encode(uint64_t codePoint, size_t *size)
         return (uint32_t)byte1 << 16 | (uint32_t)byte2 << 8 | byte3;
     }
     // Between U+10000 and U+10FFFF?
-    else if(codePoint < 0x10FFFFu)
+    else if(codePoint <= 0x10FFFFu)
     {
         // This range is encoded in 4 bytes
         if(size) *size = 4;
