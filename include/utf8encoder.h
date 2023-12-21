@@ -24,6 +24,7 @@
  * Returns how many bytes the encoded UTF-8 character will take up.
  * This would be the first byte of a multi-byte character.
  * An ASCII character would return 1.
+ * If the byte given is an invalid first byte `0` is returned.
  * @param The first byte of the UTF-8 encoded character.
  * @return How many bytes this encoding takes up from 1 to 4.
  */
@@ -32,7 +33,8 @@ size_t utf8Size(uint8_t binary);
 /**
  * Encodes a single UTF-8 code point into its binary representation.
  * Fills the `size` argument with the size.
- * `size` will be set to `0` on fail.
+ * If `codePoint` is not a valid code point (i.e. not U+0000 to U+10FFFF
+ * inclusive), `size` is set to `0` and `0` is returned.
  * @param codePoint The code point (e.g. the 0xAE49 in U+AE49).
  * @param size      Where to copy the number of bytes the encoded code
  *                  point uses, or `NULL`.
@@ -42,9 +44,11 @@ uint32_t utf8Encode(uint64_t codePoint, size_t *size);
 
 /**
  * Decodes a single UTF-8 encoded character into its code point.
- * An error occurred if `binary` was not `0` and this function returns `0`.
+ * If `binary` was not `0` and this function returns `0`, the given
+ * binary is not a valid UTF-8 character.
  * @param binary The UTF-8 encoded byte character.
- * @return The code point of the UTF-8 encoded character.
+ * @return The code point of the UTF-8 encoded character. Minimum U+0000
+ *         to maximum U+10FFFF inclusive.
  */
 uint64_t utf8Decode(uint32_t binary);
 
