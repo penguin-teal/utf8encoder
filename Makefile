@@ -40,7 +40,7 @@ static: $(OUT)
 
 $(SO_OBJ)/%.o: $(SRC)/%.c
 	$(MKDIR) $(SO_OBJ)
-	$(CC) $(SO_CFLAGS) $(RELEASECFLAGS) -I$(INCLUDE) -c $^ -o $@
+	$(CC) $(SO_C_FLAGS) $(RELEASECFLAGS) -I$(INCLUDE) -c $^ -o $@
 
 $(SO_OUT): $(SO_OBJS)
 	mkdir -p -- $(BIN)
